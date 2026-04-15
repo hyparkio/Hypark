@@ -3,169 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HYPARK | All-in-One Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>QODEKZ | Secure Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #00ff41;
-            --bg: #0d1117;
-            --card: #161b22;
-            --accent: #58a6ff;
+            --neon: #00f2ff;
+            --bg: #05070a;
+            --glass: rgba(255, 255, 255, 0.03);
         }
+
         body {
             background-color: var(--bg);
-            color: #c9d1d9;
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0; padding: 0;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
         }
-        /* Navigation */
-        nav {
-            background: #010409;
-            padding: 15px 5%;
+
+        /* Кәсіби Auth панелі */
+        .auth-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            position: sticky; top: 0; z-index: 1000;
+            gap: 15px;
+            background: var(--glass);
+            padding: 8px 15px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 242, 255, 0.2);
         }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
-        .nav-links button {
-            background: none; border: 1px solid var(--primary);
-            color: var(--primary); padding: 8px 15px; border-radius: 5px;
-            cursor: pointer; margin-left: 10px;
+
+        .user-photo {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon);
+            display: none;
         }
 
-        /* Hero Section */
-        .hero { text-align: center; padding: 60px 20px; background: linear-gradient(180deg, #010409 0%, var(--bg) 100%); }
-        
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-        /* Grid Layout */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-
-        .card {
-            background: var(--card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #30363d;
+        .btn-auth {
+            background: none;
+            border: 1px solid var(--neon);
+            color: var(--neon);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Orbitron';
+            font-size: 0.7rem;
             transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-        /* Shop Section */
-        .game-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; background: #0d1117; padding: 10px; border-radius: 8px; }
-        .buy-btn { background: var(--accent); color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; }
+        .btn-auth:hover {
+            background: var(--neon);
+            color: black;
+            box-shadow: 0 0 15px var(--neon);
+        }
 
-        /* Password Lab */
-        #pass-output { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: var(--primary); margin-bottom: 10px; }
-        .strength-bar { height: 5px; width: 0%; transition: 0.5s; margin-bottom: 10px; }
+        /* Хат жіберу формасының жаңа дизайны */
+        .contact-section {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 40px;
+            background: var(--glass);
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
 
-        /* News Section */
-        .news-post { border-bottom: 1px solid #30363d; padding: 15px 0; }
-        .actions { color: var(--accent); cursor: pointer; margin-top: 10px; }
+        input, textarea {
+            width: 100%;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            color: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            outline: none;
+            transition: 0.3s;
+        }
 
-        /* AI Chat */
-        .ai-box { height: 200px; overflow-y: auto; background: #000; padding: 10px; border-radius: 5px; margin-bottom: 10px; font-size: 0.9rem; }
+        input:focus { border-color: var(--neon); }
 
-        h2 { color: var(--primary); border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .btn-send {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #00f2ff, #0072ff);
+            border: none;
+            color: black;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-<nav>
-    <div class="logo">HYPARK OS</div>
-    <div class="nav-links">
-        <button onclick="alert('Google Auth жақын арада қосылады (Firebase)')"><i class="fab fa-google"></i> Тіркелу</button>
+    <div class="auth-bar" id="auth-panel">
+        <img id="user-img" class="user-photo" src="" alt="User">
+        <span id="user-name" style="font-size: 0.8rem; display: none;"></span>
+        <button class="btn-auth" id="login-btn" onclick="signInWithGoogle()">LOG IN</button>
+        <button class="btn-auth" id="logout-btn" style="display: none;" onclick="signOutUser()">EXIT</button>
     </div>
-</nav>
 
-<div class="hero">
-    <h1>Қош келдіңіз, Hypark әлеміне!</h1>
-    <p>Барлық IT құралдар мен ойын сервистері бір жерде.</p>
-</div>
-
-<div class="container">
-    <div class="grid">
+    <div class="contact-section">
+        <h2 style="font-family: 'Orbitron'; color: var(--neon);">SECURE MESSAGE</h2>
+        <p id="auth-status" style="font-size: 0.8rem; color: #ff4444;">Жүйеге кіріңіз...</p>
         
-        <div class="card">
-            <h2><i class="fas fa-shopping-cart"></i> Game Shop</h2>
-            <input type="text" placeholder="Ойын іздеу..." style="width:100%; padding:8px; margin-bottom:15px; border-radius:5px; border:none;">
-            <div class="game-item">
-                <span>Brawl Stars Account</span>
-                <button class="buy-btn">5000 ₸</button>
-            </div>
-            <div class="game-item">
-                <span>Free Fire Diamonds</span>
-                <button class="buy-btn">2000 ₸</button>
-            </div>
-            <div class="game-item">
-                <span>PUBG UC Mobile</span>
-                <button class="buy-btn">3500 ₸</button>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2><i class="fas fa-shield-alt"></i> Password Lab</h2>
-            <input type="text" id="pass-output" readonly>
-            <div class="strength-bar" id="bar"></div>
-            <p id="time-info" style="font-size: 0.8rem;"></p>
-            <button onclick="genPass()" style="width:100%; padding:10px; background:var(--primary); border:none; border-radius:5px; cursor:pointer;">Генерация</button>
-            <button onclick="savePass()" style="width:100%; margin-top:10px; padding:8px; background:none; border:1px solid #555; color:white; cursor:pointer;">Сақтау</button>
-        </div>
-
-        <div class="card">
-            <h2><i class="fas fa-robot"></i> Hypark AI</h2>
-            <div class="ai-box" id="ai-chat">Бұл жерде Gemini AI жауап береді...</div>
-            <input type="text" placeholder="Сұрақ қойыңыз..." style="width:100%; padding:10px; border-radius:5px; border:none;">
-        </div>
-
-        <div class="card" style="grid-column: 1 / -1;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h2><i class="fas fa-globe"></i> Әлемдік жаңалықтар</h2>
-                <select style="background:#161b22; color:white; border:1px solid #333; padding:5px;">
-                    <option>Kazakhstan 🇰🇿</option>
-                    <option>USA 🇺🇸</option>
-                    <option>Russia 🇷🇺</option>
-                </select>
-            </div>
-            <div class="news-post">
-                <h4>Жаңа кибершабуылдың алды алынды</h4>
-                <p>Бүгін Hypark жүйесі жаңа қауіпсіздік жаңартуын шығарды...</p>
-                <div class="actions"><i class="fas fa-heart"></i> 124 <i class="fas fa-comment"></i> 12</div>
-            </div>
-            <button onclick="alert('Шағым жіберілді!')" style="margin-top:15px; background:none; color:#ff4d4d; border:none; cursor:pointer;">Админге жалоб жіберу</button>
-        </div>
-
+        <form id="contact-form">
+            <input type="text" id="msg-subject" placeholder="Тақырып (мысалы: Инвестиция)" required>
+            <textarea id="msg-body" placeholder="Сұрағыңызды қалдырыңыз..." rows="5" required></textarea>
+            <button type="button" class="btn-send" id="send-btn" disabled onclick="handleSendMessage()">ЖІБЕРУ</button>
+        </form>
     </div>
-</div>
 
-<script>
-    // Password Logic
-    function genPass() {
-        const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-        let pass = "";
-        for (let i = 0; i < 16; i++) pass += chars[Math.floor(Math.random() * chars.length)];
-        document.getElementById('pass-output').value = pass;
-        
-        const bar = document.getElementById('bar');
-        bar.style.width = "100%";
-        bar.style.backgroundColor = "var(--primary)";
-        document.getElementById('time-info').innerText = "Бұзу уақыты: ~450 жыл";
-    }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
 
-    function savePass() {
-        const p = document.getElementById('pass-output').value;
-        if(p) {
-            localStorage.setItem('saved_pass', p);
-            alert("Пароль браузер жадына сақталды!");
-        }
-    }
+        // СЕНІҢ КОНФИГУРАЦИЯҢ
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1Cqd_-ZgmkEzd2zeZYHWjjHkKVoZBZa4",
+            authDomain: "qodekz-studio.firebaseapp.com",
+            projectId: "qodekz-studio",
+            storageBucket: "qodekz-studio.firebasestorage.app",
+            messagingSenderId: "712995595606",
+            appId: "1:712995595606:web:b551c0a8fc2e1d461422f7",
+            measurementId: "G-ZVP93DTM24"
+        };
 
-    function genAI() {
-        const chat = document.getElementById('ai-chat');
-        chat.innerHTML += "<br><b>Сіз:</b> Сәлем!<br><b>AI:</b> Сәлем! Мен Hypark көмекшісімін.";
-    }
-</script>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+        const provider = new GoogleAuthProvider();
 
+        // 1. Google-мен кіру
+        window.signInWithGoogle = () => {
+            signInWithPopup(auth, provider).catch(err => console.error("Қате:", err));
+        };
+
+        // 2. Шығу
+        window.signOutUser = () => signOut(auth);
+
+        // 3. Пайдаланушы күйін бақылау
+        onAuthStateChanged(auth, (user) => {
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userImg = document.getElementById('user-img');
+            const userName = document.getElementById('user-name');
+            const statusText = document.getElementById('auth-status');
+            const sendBtn = document.getElementById('send-btn');
+
+            if (user) {
+                // Пайдаланушы кіргенде
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                userImg.src = user.photoURL;
+                userImg.style.display = 'block';
+                userName.innerText = user.displayName;
+                userName.style.display = 'block';
+                statusText.innerText = "Авторизация сәтті: " + user.email;
+                statusText.style.color = "#00ff88";
+                sendBtn.disabled = false;
+            } else {
+                // Пайдаланушы шыққанда
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                userImg.style.display = 'none';
+                userName.style.display = 'none';
+                statusText.innerText = "Хат жіберу үшін жүйеге кіріңіз";
+                statusText.style.color = "#ff4444";
+                sendBtn.disabled = true;
+            }
+        });
+
+        // 4. Хатты базаға жіберу (ЕҢ ҚАУІПСІЗ ЖОЛЫ)
+        window.handleSendMessage = () => {
+            const user = auth.currentUser;
+            const subject = document.getElementById('msg-subject').value;
+            const body = document.getElementById('msg-body').value;
+
+            if (user && subject && body) {
+                const messagesRef = ref(db, 'secure_messages/' + user.uid);
+                push(messagesRef, {
+                    sender_name: user.displayName,
+                    sender_email: user.email,
+                    subject: subject,
+                    message: body,
+                    timestamp: new Date().toISOString(),
+                    security_check: "VERIFIED_BY_GOOGLE"
+                }).then(() => {
+                    alert("Хат қабылданды! Админ жақын арада жауап береді.");
+                    document.getElementById('contact-form').reset();
+                });
+            }
+        };
+    </script>
 </body>
 </html>
 
