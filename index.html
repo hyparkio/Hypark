@@ -2,68 +2,37 @@
 <html lang="kk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT ға арналған кітапхана</title>
-    <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f9f9f9; text-align: center; }
-        .book-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .book-card {
-            background: #fff;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .book-card a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
+    <title>IT Кітапханасы</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1> IT ға арналған кітапхана</h1>
-    
-    <div id="google_translate_element"></div>
-
-    <div class="book-grid">
-        <div class="book-card">
-            <h3>Phoenix Project</h3>
-            <a href="phoenix.pdf" target="_blank">Оқу (PDF)</a>
-        </div>
-        <div class="book-card">
-            <h3>Kali Linux</h3>
-            <a href="kali.pdf" target="_blank">Оқу (PDF)</a>
-        </div>
-        <div class="book-card">
-            <h3>Operating Systems</h3>
-            <a href="os.pdf" target="_blank">Оқу (PDF)</a>
-        </div>
-        <div class="book-card">
-            <h3>Common Circuits</h3>
-            <a href="circuits.pdf" target="_blank">Оқу (PDF)</a>
-        </div>
-        <div class="book-card">
-            <h3>Logical Creativity</h3>
-            <a href="coding.pdf" target="_blank">Оқу (PDF)</a>
-        </div>
+    <div id="app">
+        <h1>IT Кітапханасы</h1>
+        <div id="library-container" class="book-grid">
+            </div>
     </div>
 
-    <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'kk,ru,en'}, 'google_translate_element');
-    }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        // Бұл — болашақ Firebase/API логикасының негізі
+        const libraryData = [
+            { id: 1, title: "The Phoenix Project", file: "phoenix.pdf" },
+            { id: 2, title: "Kali Linux", file: "kali.pdf" }
+        ];
 
+        function renderLibrary(books) {
+            const container = document.getElementById('library-container');
+            books.forEach(book => {
+                container.innerHTML += `
+                    <div class="book-card" data-id="${book.id}">
+                        <h3>${book.title}</h3>
+                        <a href="assets/pdfs/${book.file}" target="_blank">Оқу</a>
+                    </div>
+                `;
+            });
+        }
+        renderLibrary(libraryData);
+    </script>
 </body>
 </html>
 
